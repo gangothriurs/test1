@@ -1,0 +1,26 @@
+rule rosterRule {
+           evaluations {
+               "udf:CheckForRosterViolation(MTWPhase1_Floor4)"
+           }
+           postProcess{
+               function addAttribute{
+                  params("alertMessage" , "Person violated the roster Rule")
+               }
+           }
+       }
+   ruleSet RosterManagement {
+           use personData
+           message("Roster Management of people")
+           applicationSet {
+               type :  "person"
+           }
+           rules {
+              rosterRule
+           }
+           actions {
+             trigger {
+                  once
+               }
+           sendEmail("Gangothri")
+           }
+       }
